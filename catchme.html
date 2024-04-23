@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch Me</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: 'Itim', cursive;
+            color: #fdfcfc;
+            background-color: black;
+           box-sizing: border-box;
+        }
+
+        #box-board {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+
+            box-shadow: 0px 1px 2px 0px rgba(0, 255, 255, 0.7),
+                1px 2px 4px 0px rgba(0, 255, 255, 0.7),
+                2px 4px 8px 0px rgba(0, 255, 255, 0.7),
+                2px 4px 16px 0px rgba(0, 255, 255, 0.7);
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            width: 180px;
+            background-color: #4CAF50;
+            color: rgb(8, 8, 8);
+            height: 10vh;
+            font-weight: bolder;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: medium;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #4ea309;
+        }
+
+p{
+    text-align: center;
+}
+img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.box:hover{
+  transform: scale(1.1);
+}
+#box-board {
+  display: flex;
+}
+
+.box {
+  cursor: pointer;
+}
+
+        @media (max-width: 400px) {
+            #box-board {
+                width: 150px;
+                height: 150px;
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+
+            .box {
+                width: 50px;
+                height: 50px;
+
+                box-shadow: 0px 1px 2px 0px rgba(0, 255, 255, 0.7),
+                    1px 2px 4px 0px rgba(0, 255, 255, 0.7),
+                    2px 4px 8px 0px rgba(0, 255, 255, 0.7),
+                    2px 4px 16px 0px rgba(0, 255, 255, 0.7);
+                transition: 0.5s;
+            }
+        }
+        #linkto {
+            font-size: 15px;
+          font-weight: bold;
+            text-align: center;
+            margin: 0 auto;
+            background-color: #eee6c2;
+            border-radius: 5px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #message{
+            background-color: rgb(247, 217, 179);
+            width: 50%;
+            margin: 20px auto;
+        }
+        #catchmeqr {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            margin: 0 auto;
+
+        }
+
+        #divgr {
+            padding-top: 20px;
+            width: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        #donate {
+            width: 100px;
+            height: 50px;
+           background-color: #4CAF50;
+            margin: 0 auto;
+
+        
+        }
+    </style>
+</head>
+<body>
+    
+    <p>You have 10s to catch me! Good Luck.</p>
+    <button id="countdown" onclick="startGame()">Start Game</button>
+    <p id="message"></p>
+    <div id="box-board">
+        <div class="box" id="box1"></div>
+        <div class="box" id="box2"></div>
+        <div class="box" id="box3"></div>
+        <div class="box" id="box4"></div>
+        <div class="box" id="box5"></div>
+        <div class="box" id="box6"></div>
+        <div class="box" id="box7"></div>
+        <div class="box" id="box8"></div>
+        <div class="box" id="box9"></div>
+    </div>
+ <div id="divgr">
+<button id="donate" onclick="window.open('https://www.paypal.com/donate/?hosted_button_id=VD3YGDBNY6CUA')"
+        style="background-color: darkkhaki;">Donate!</button>
+        <img id="catchmeqr" src="QR Code.png" alt="Scan to Donate">
+    </div>
+    <script>
+function startGame() {
+const bgMusic = new Audio('dramatic.mp3');
+bgMusic.play();
+let timeLeft = 10;
+let startTime = timeLeft; // Added to track start time
+const messageElement = document.getElementById('message');
+const countdownButton = document.getElementById('countdown');
+countdownButton.disabled = true;
+countdownButton.style.backgroundColor = 'red'; // Added to set disabled button color
+
+const timer = setInterval(() => {
+if (timeLeft <= 0) {
+clearInterval(timer);
+messageElement.textContent = "Time's up! You Lose!";
+messageElement.style.color = 'red';
+resetGame();
+return;
+}
+
+const boxes = document.querySelectorAll('.box');
+const randomIndex = Math.floor(Math.random() * boxes.length);
+const box = boxes[randomIndex];
+
+const images = ['cat.png'];
+const imgSrc = images[Math.floor(Math.random() * images.length)]; // Changed to random image
+
+box.innerHTML = `<img src="${imgSrc}">`;
+
+box.addEventListener('click', (event) => {
+if (event.target.tagName === 'IMG') {
+clearInterval(timer);
+let secondsTaken = startTime - timeLeft; // Calculate seconds taken
+messageElement.textContent = `You Win! It took you ${secondsTaken} seconds`;
+messageElement.style.color = 'green';
+resetGame();
+}
+});
+
+// Remove the click event listener from the box if it doesn't contain a cat
+setTimeout(() => {
+if (!box.contains(box.querySelector('img'))) {
+clearInterval(timer);
+messageElement.textContent = "You Lose!";
+messageElement.style.color = 'red';
+resetGame();
+}
+box.innerHTML = '';
+}, 350);
+
+timeLeft--;
+}, 1000);
+}
+
+function resetGame() {
+const countdownButton = document.getElementById('countdown');
+countdownButton.disabled = false; // Enable the button after the game ends
+countdownButton.textContent = "Start Game"; // Reset button text
+setTimeout(() => {
+location.reload();
+},3000);
+// Reset game state without reloading the page
+// You might need to implement a function to reset the game state here
+// For example, clearing the boxes and resetting messageElement text
+
+// Example:
+// const messageElement = document.getElementById('message');
+// messageElement.textContent = '';
+// const boxes = document.querySelectorAll('.box');
+// boxes.forEach(box => {
+//     box.innerHTML = '';
+// });
+}
+
+    </script>
+</body>
+</html>
