@@ -6,36 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catch Me</title>
     <style>
-        body{
-            margin: 0;
-            padding: 0;
-            font-family: 'Itim', cursive;
-            color: #fdfcfc;
-            background-color: black;
-           box-sizing: border-box;
-        }
+* {
+  box-sizing: border-box;
+  background-color: black;
+}
 
-        #box-board {
-            width: 300px;
-            height: 300px;
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            justify-content: space-between;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
+#board{
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 
-        .box {
-            width: calc(100% / 3);
-            height: calc(100% / 3);
+.cube {
+  width: 300px;
+  height: 300px;
+  perspective: 1000px;
+}
 
-            box-shadow: 0px 1px 2px 0px rgba(0, 255, 255, 0.7),
-                1px 2px 4px 0px rgba(0, 255, 255, 0.7),
-                2px 4px 8px 0px rgba(0, 255, 255, 0.7),
-                2px 4px 16px 0px rgba(0, 255, 255, 0.7);
-            box-sizing: border-box;
-        }
+.row {
+  display: flex;
+}
+
+.box {
+  flex: 2;
+  height: 100px;
+  background-color: #070000;
+  border: 1px solid #666;
+  transform-style: preserve-3d;
+}
+
+@media (max-width: 600px) {
+  .cube {
+    width: 200px;
+    height: 200px;
+  }
+  .cell {
+    height: 66px;
+  }
+}
 
 
         button {
@@ -77,39 +88,7 @@ img{
   cursor: pointer;
 }
 
-        @media (max-width: 400px) {
-            #box-board {
-                width: 150px;
-                height: 150px;
-                display: flex;
-                flex-wrap: wrap;
-                margin: 0 auto;
-                box-sizing: border-box;
-            }
-
-            .box {
-                width: 50px;
-                height: 50px;
-
-                box-shadow: 0px 1px 2px 0px rgba(0, 255, 255, 0.7),
-                    1px 2px 4px 0px rgba(0, 255, 255, 0.7),
-                    2px 4px 8px 0px rgba(0, 255, 255, 0.7),
-                    2px 4px 16px 0px rgba(0, 255, 255, 0.7);
-                transition: 0.5s;
-            }
-        }
-        #linkto {
-            font-size: 15px;
-          font-weight: bold;
-            text-align: center;
-            margin: 0 auto;
-            background-color: #eee6c2;
-            border-radius: 5px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      
         #message{
             background-color: rgb(247, 217, 179);
             width: 50%;
@@ -147,22 +126,31 @@ img{
     <p>You have 10s to catch me! Good Luck.</p>
     <button id="countdown" onclick="startGame()">Start Game</button>
     <p id="message"></p>
-    <div id="box-board">
-        <div class="box" id="box1"></div>
-        <div class="box" id="box2"></div>
-        <div class="box" id="box3"></div>
-        <div class="box" id="box4"></div>
-        <div class="box" id="box5"></div>
-        <div class="box" id="box6"></div>
-        <div class="box" id="box7"></div>
-        <div class="box" id="box8"></div>
-        <div class="box" id="box9"></div>
+    <div id="board">
+    <div class="cube">
+        <div class="row">
+          <div class="box" id="box1"></div>
+          <div class="box" id="box2"></div>
+          <div class="box" id="box3"></div>
+        </div>
+        <div class="row">
+          <div class="box" id="box4"></div>
+          <div class="box" id="box5"></div>
+          <div class="box" id="box6"></div>
+        </div>
+        <div class="row">
+          <div class="box" id="box7"></div>
+          <div class="box" id="box8"></div>
+          <div class="box" id="box9"></div>
+        </div>
+      </div>
     </div>
  <div id="divgr">
 <button id="donate" onclick="window.open('https://www.paypal.com/donate/?hosted_button_id=VD3YGDBNY6CUA')"
         style="background-color: darkkhaki;">Donate!</button>
         <img id="catchmeqr" src="QR Code.png" alt="Scan to Donate">
     </div>
+   
     <script>
 function startGame() {
 const bgMusic = new Audio('dramatic.mp3');
