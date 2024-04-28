@@ -113,6 +113,23 @@ img{
 
         
         }
+         #divgr {
+            padding-top: 30px;
+            width: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        #donate {
+            width: 100px;
+            height: 40px;
+           
+            margin: 0 auto;
+
+        
+        }
     </style>
 </head>
 <body>
@@ -139,7 +156,11 @@ img{
         </div>
       </div>
     </div>
-
+ <div id="divgr">
+<button id="donate" onclick="window.open('https://www.paypal.com/donate/?hosted_button_id=VD3YGDBNY6CUA')"
+        style="background-color: darkkhaki;">Donate!</button>
+        <img id="catchmeqr" src="QR Code.png" alt="Scan to Donate">
+    </div>
    
     <script>
 function startGame() {
